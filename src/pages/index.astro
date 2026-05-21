@@ -16,25 +16,29 @@ const structuredData = {
 <BaseLayout title={title} description={description}>
   <script type="application/ld+json" slot="head" set:html={JSON.stringify(structuredData)} />
 
-  <h1>Knowledge Hub</h1>
-  <p>A place where I share what I'm learning.</p>
+  <div class="u-container py-section-lg u-stack-lg">
+    <header class="u-stack-sm">
+      <h1>Knowledge Hub</h1>
+      <p class="text-large text-secondary">A place where I share what I'm learning.</p>
+    </header>
 
-  <section>
-    <h2>What is this?</h2>
-    <p>
-      This site is a learning project. I'm using it to understand Cloudflare,
-      Astro, and how the modern web is built. Each section answers a question
-      I had while learning.
-    </p>
-  </section>
+    <section class="u-stack-sm">
+      <h2>What is this?</h2>
+      <p>
+        This site is a learning project. I'm using it to understand Cloudflare,
+        Astro, and how the modern web is built. Each section answers a question
+        I had while learning.
+      </p>
+    </section>
 
-  <section>
-    <h2>What am I building?</h2>
-    <p>
-      A progressive learning project on Cloudflare's edge platform. It starts as
-      a static site, then layers in dynamic features — server rendering, a
-      database, search, and more — to teach the full stack of Cloudflare
-      primitives one step at a time.
-    </p>
-  </section>
+    <section class="u-stack-sm">
+      <h2>What am I building?</h2>
+      <p>
+        A progressive learning project on Cloudflare's edge platform. It starts as
+        a static site, then layers in dynamic features — server rendering, a
+        database, search, and more — to teach the full stack of Cloudflare
+        primitives one step at a time.
+      </p>
+    </section>
+  </div>
 </BaseLayout>

@@ -96,6 +96,37 @@ Larger headings taper more (bigger mobile/desktop delta); body sizes barely scal
 
 **Letter-spacing** is baked into semantic heading defaults and the `u-text-style-*` aliases (tighter for bigger sizes). It is not exposed as a token.
 
+## Vertical rhythm — the `.u-stack` pattern
+
+Headings, paragraphs, and other text elements have **no default vertical margins**. Spacing is owned by the parent container via `.u-stack-*` — a flex column with a `gap` consuming the fluid spacing tokens. This keeps components composable: drop a heading into a card and it doesn't add surprise space; wrap content in a stack and it gets predictable rhythm.
+
+| Class | Gap token | Use |
+|---|---|---|
+| `u-stack-xs` | `--space-xs` | Tight clusters (label + value, badge + meta) |
+| `u-stack-sm` | `--space-sm` | Within a section block (heading + body) |
+| `u-stack` | `--space-md` | Default — between paragraphs, list items |
+| `u-stack-lg` | `--space-lg` | Between distinct section blocks |
+| `u-stack-xl` | `--space-xl` | Between major page regions inside a section |
+
+Compose by nesting stacks at different sizes:
+
+```html
+<main class="u-container py-section-lg u-stack-lg">
+  <header class="u-stack-sm">
+    <h1>Page title</h1>
+    <p>Lede paragraph that sits closer to the heading than to the next block.</p>
+  </header>
+  <section class="u-stack-sm">
+    <h2>Section heading</h2>
+    <p>Body copy.</p>
+  </section>
+</main>
+```
+
+**Don't fight the gap.** When a child needs to break out of the rhythm (e.g. a tight button group, a flush-aligned media block), wrap that child in its own container or move it to a sibling stack. Negative margins to "undo" the gap create fragile, surprising layouts.
+
+`.u-prose` will be added later for blog/CMS content where heading→body spacing should differ from body→body spacing. Until then, `.u-stack-*` is the only vertical-rhythm primitive.
+
 ## Site margin and container
 
 Page gutter scales `1rem` → `5rem` between 375px and 1440px viewports.
@@ -225,15 +256,19 @@ Focus rings: all three themes use a brand-family color that hits ≥3:1 against 
 ## Common recipes
 
 ```html
-<!-- Page shell -->
-<main class="u-container py-section-lg">
-  <section class="py-section-md">…</section>
+<!-- Page shell with stacked sections -->
+<main class="u-container py-section-lg u-stack-lg">
+  <header class="u-stack-sm">
+    <h1>Page title</h1>
+    <p>Lede.</p>
+  </header>
+  <section class="u-stack-sm">…</section>
 </main>
 
-<!-- Card -->
-<article class="bg-surface-raised text-primary p-md rounded-md border border-border-subtle">
+<!-- Card — internal rhythm via u-stack-sm -->
+<article class="bg-surface-raised text-primary p-md u-stack-sm rounded-md border border-border-subtle">
   <h3>Card title</h3>
-  <p class="text-secondary mt-sm">Body copy.</p>
+  <p class="text-secondary">Body copy.</p>
 </article>
 
 <!-- Inline brand accent -->
