@@ -1,45 +1,40 @@
 ---
+import BaseLayout from '../layouts/BaseLayout.astro';
+
 const title = "Knowledge Hub — A place to learn and build";
 const description = "A personal site where I share what I'm learning about web development, Cloudflare, and building on the edge.";
+
+const structuredData = {
+  "@context": "https://schema.org",
+  "@type": "WebSite",
+  "name": "Knowledge Hub",
+  "url": Astro.site?.href,
+  "description": description,
+};
 ---
 
-<!doctype html>
-<html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>{title}</title>
-    <meta name="description" content={description} />
-    <link rel="canonical" href={Astro.url.href} />
+<BaseLayout title={title} description={description}>
+  <script type="application/ld+json" slot="head" set:html={JSON.stringify(structuredData)} />
 
-    <!-- Open Graph (for social shares) -->
-    <meta property="og:title" content={title} />
-    <meta property="og:description" content={description} />
-    <meta property="og:type" content="website" />
-    <meta property="og:url" content={Astro.url.href} />
-  </head>
-  <body>
-    <main>
-      <h1>Knowledge Hub</h1>
-      <p>A place where I share what I'm learning.</p>
+  <h1>Knowledge Hub</h1>
+  <p>A place where I share what I'm learning.</p>
 
-      <section>
-        <h2>What is this?</h2>
-        <p>
-          This site is a learning project. I'm using it to understand Cloudflare,
-          Astro, and how the modern web is built. Each section answers a question
-          I had while learning.
-        </p>
-      </section>
-	  <section>
-  		<h2>What am I building?</h2>
-  		<p>
-			A progressive learning project on Cloudflare's edge platform. It starts as
-			a static site, then layers in dynamic features — server rendering, a
-			database, search, and more — to teach the full stack of Cloudflare
-			primitives one step at a time.
-			</p>
-	</section>
-    </main>
-  </body>
-</html>
+  <section>
+    <h2>What is this?</h2>
+    <p>
+      This site is a learning project. I'm using it to understand Cloudflare,
+      Astro, and how the modern web is built. Each section answers a question
+      I had while learning.
+    </p>
+  </section>
+
+  <section>
+    <h2>What am I building?</h2>
+    <p>
+      A progressive learning project on Cloudflare's edge platform. It starts as
+      a static site, then layers in dynamic features — server rendering, a
+      database, search, and more — to teach the full stack of Cloudflare
+      primitives one step at a time.
+    </p>
+  </section>
+</BaseLayout>
