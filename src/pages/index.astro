@@ -1,11 +1,36 @@
 ---
-import Welcome from '../components/Welcome.astro';
-import Layout from '../layouts/Layout.astro';
-
-// Welcome to Astro! Wondering what to do next? Check out the Astro documentation at https://docs.astro.build
-// Don't want to use any of this? Delete everything in this file, the `assets`, `components`, and `layouts` directories, and start fresh.
+const title = "Knowledge Hub — A place to learn and build";
+const description = "A personal site where I share what I'm learning about web development, Cloudflare, and building on the edge.";
 ---
 
-<Layout>
-	<Welcome />
-</Layout>
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>{title}</title>
+    <meta name="description" content={description} />
+    <link rel="canonical" href={Astro.url.href} />
+
+    <!-- Open Graph (for social shares) -->
+    <meta property="og:title" content={title} />
+    <meta property="og:description" content={description} />
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content={Astro.url.href} />
+  </head>
+  <body>
+    <main>
+      <h1>Knowledge Hub</h1>
+      <p>A place where I share what I'm learning.</p>
+
+      <section>
+        <h2>What is this?</h2>
+        <p>
+          This site is a learning project. I'm using it to understand Cloudflare,
+          Astro, and how the modern web is built. Each section answers a question
+          I had while learning.
+        </p>
+      </section>
+    </main>
+  </body>
+</html>
