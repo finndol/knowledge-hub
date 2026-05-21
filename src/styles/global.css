@@ -1,4 +1,9 @@
 @import "tailwindcss";
+@import "./tokens.css";
+
+/* =============================================================================
+   FONT FACES
+============================================================================= */
 
 /* Satoshi — variable font, single file covers all weights (300–900). */
 @font-face {
@@ -48,106 +53,203 @@
     "Nib Pro", "Satoshi", ui-sans-serif, system-ui, sans-serif;
 }
 
-/* Leading trim — Satoshi defaults.
-   Half-leading is removed above cap-height and below baseline so text sits
-   flush to its container. Offsets are font-specific. */
-:is([class*="u-text-style-"], h1, h2, h3, h4, h5, h6, p, blockquote) {
+/* =============================================================================
+   LEADING TRIM
+
+   Removes half-leading above cap-height and below baseline so text sits flush
+   to its container. Offsets are font-specific.
+
+   Eligibility selector: any heading (h1–h6), p, blockquote, OR any utility
+   class in the typography scale (legacy `u-text-style-*` and new `text-h*` /
+   `text-xlarge|large|medium|small`).
+
+   To add new text utilities or components: ensure they appear in the
+   eligibility selector OR are applied to a semantic element above.
+============================================================================= */
+
+:where(
+  [class*="u-text-style-"],
+  .text-h1, .text-h2, .text-h3, .text-h4, .text-h5, .text-h6,
+  .text-xlarge, .text-large, .text-medium, .text-small,
+  h1, h2, h3, h4, h5, h6, p, blockquote
+) {
   display: flow-root;
 }
-:is([class*="u-text-style-"], h1, h2, h3, h4, h5, h6, p, blockquote)::before {
+:where(
+  [class*="u-text-style-"],
+  .text-h1, .text-h2, .text-h3, .text-h4, .text-h5, .text-h6,
+  .text-xlarge, .text-large, .text-medium, .text-small,
+  h1, h2, h3, h4, h5, h6, p, blockquote
+)::before {
   content: "";
   display: table;
   margin-bottom: calc(-0.5lh + 0.34em);
 }
-:is([class*="u-text-style-"], h1, h2, h3, h4, h5, h6, p, blockquote)::after {
+:where(
+  [class*="u-text-style-"],
+  .text-h1, .text-h2, .text-h3, .text-h4, .text-h5, .text-h6,
+  .text-xlarge, .text-large, .text-medium, .text-small,
+  h1, h2, h3, h4, h5, h6, p, blockquote
+)::after {
   content: "";
   display: table;
   margin-bottom: calc(-0.5lh + 0.38em);
 }
 
-/* Leading trim — Nib Pro overrides.
-   Triggered by `.font-accent` (the same class Tailwind generates from
-   --font-accent), so opting into the accent font also opts into its trim. */
-:is(
-  [class*="u-text-style-"], h1, h2, h3, h4, h5, h6, p, blockquote
+/* Nib Pro overrides — opting into .font-accent opts into its trim. */
+:where(
+  [class*="u-text-style-"],
+  .text-h1, .text-h2, .text-h3, .text-h4, .text-h5, .text-h6,
+  .text-xlarge, .text-large, .text-medium, .text-small,
+  h1, h2, h3, h4, h5, h6, p, blockquote
 ).font-accent::before {
   margin-bottom: calc(-0.5lh + 0.47em);
 }
-:is(
-  [class*="u-text-style-"], h1, h2, h3, h4, h5, h6, p, blockquote
+:where(
+  [class*="u-text-style-"],
+  .text-h1, .text-h2, .text-h3, .text-h4, .text-h5, .text-h6,
+  .text-xlarge, .text-large, .text-medium, .text-small,
+  h1, h2, h3, h4, h5, h6, p, blockquote
 ).font-accent::after {
   margin-bottom: calc(-0.5lh + 0.29em);
 }
 
-/* Typography scale — standard (static rem values).
-   Will be converted to fluid values in a follow-up. */
+/* =============================================================================
+   BASE ELEMENT STYLES
+
+   Semantic h1–h6 elements inherit fluid sizes from tokens. Utility classes
+   (text-h1 etc.) override cleanly. Body inherits surface + text tokens so a
+   theme switch on <html> recolors the whole document.
+============================================================================= */
+
+html {
+  font-family: var(--font-sans);
+  color: var(--text-primary);
+  background-color: var(--surface-page);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-rendering: optimizeLegibility;
+}
+
+body {
+  font-size: var(--text-medium);
+  line-height: var(--leading-body);
+}
+
+h1 {
+  font-size: var(--text-h1);
+  line-height: var(--leading-tight);
+  letter-spacing: -0.03em;
+  font-weight: 500;
+}
+h2 {
+  font-size: var(--text-h2);
+  line-height: var(--leading-tight);
+  letter-spacing: -0.025em;
+  font-weight: 500;
+}
+h3 {
+  font-size: var(--text-h3);
+  line-height: var(--leading-tight);
+  letter-spacing: -0.02em;
+  font-weight: 500;
+}
+h4 {
+  font-size: var(--text-h4);
+  line-height: var(--leading-tight);
+  letter-spacing: -0.015em;
+  font-weight: 500;
+}
+h5 {
+  font-size: var(--text-h5);
+  line-height: var(--leading-tight);
+  letter-spacing: -0.01em;
+  font-weight: 600;
+}
+h6 {
+  font-size: var(--text-h6);
+  line-height: var(--leading-tight);
+  letter-spacing: 0;
+  font-weight: 600;
+}
+
+/* Focus ring — WCAG 2.2 non-text 3:1 against adjacent surfaces.
+   Verified in light/dark/brand themes (see DESIGN_SYSTEM.md). */
+:where(a, button, input, select, textarea, [tabindex]):focus-visible {
+  outline: 0.125rem solid var(--focus-ring);
+  outline-offset: 0.125rem;
+  border-radius: 0.125rem;
+}
+
+/* =============================================================================
+   LEGACY TYPOGRAPHY UTILITIES
+
+   `u-text-style-*` utilities preserved as a stable API surface. Sizes routed
+   through the fluid tokens; letter-spacing + font-weight preserved as the
+   typographic intent. New code SHOULD prefer Tailwind utilities (`text-h1`,
+   `text-medium`, etc.) or semantic elements; these aliases stay for
+   compatibility with existing pages.
+============================================================================= */
 
 @utility u-text-style-display {
-  font-size: 7rem;
+  font-size: clamp(
+    3.5rem,
+    calc(3.5rem + (7rem - 3.5rem) * ((100vw - 23.4375rem) / 66.5625rem)),
+    7rem
+  );
   line-height: 1;
   letter-spacing: -0.04em;
   font-weight: 500;
 }
 
 @utility u-text-style-h1 {
-  font-size: 5rem;
-  line-height: 1.05;
+  font-size: var(--text-h1);
+  line-height: var(--leading-tight);
   letter-spacing: -0.03em;
   font-weight: 500;
 }
-
 @utility u-text-style-h2 {
-  font-size: 3.5rem;
-  line-height: 1.1;
+  font-size: var(--text-h2);
+  line-height: var(--leading-tight);
   letter-spacing: -0.025em;
   font-weight: 500;
 }
-
 @utility u-text-style-h3 {
-  font-size: 2.5rem;
-  line-height: 1.15;
+  font-size: var(--text-h3);
+  line-height: var(--leading-tight);
   letter-spacing: -0.02em;
   font-weight: 500;
 }
-
 @utility u-text-style-h4 {
-  font-size: 1.75rem;
-  line-height: 1.25;
+  font-size: var(--text-h4);
+  line-height: var(--leading-tight);
   letter-spacing: -0.015em;
   font-weight: 500;
 }
-
 @utility u-text-style-h5 {
-  font-size: 1.25rem;
-  line-height: 1.35;
+  font-size: var(--text-h5);
+  line-height: var(--leading-tight);
   letter-spacing: -0.01em;
   font-weight: 600;
 }
-
 @utility u-text-style-h6 {
-  font-size: 1rem;
-  line-height: 1.5;
+  font-size: var(--text-h6);
+  line-height: var(--leading-tight);
   letter-spacing: 0;
   font-weight: 600;
 }
-
 @utility u-text-style-large {
-  font-size: 1.25rem;
-  line-height: 1.6;
-  letter-spacing: 0;
+  font-size: var(--text-large);
+  line-height: var(--leading-body);
   font-weight: 400;
 }
-
 @utility u-text-style-main {
-  font-size: 1rem;
-  line-height: 1.6;
-  letter-spacing: 0;
+  font-size: var(--text-medium);
+  line-height: var(--leading-body);
   font-weight: 400;
 }
-
 @utility u-text-style-small {
-  font-size: 0.875rem;
-  line-height: 1.55;
-  letter-spacing: 0;
+  font-size: var(--text-small);
+  line-height: var(--leading-body);
   font-weight: 400;
 }
