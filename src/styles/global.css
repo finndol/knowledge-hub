@@ -1,1 +1,153 @@
 @import "tailwindcss";
+
+/* Satoshi — variable font, single file covers all weights (300–900). */
+@font-face {
+  font-family: "Satoshi";
+  src: url("/fonts/Satoshi-Variable.woff2") format("woff2-variations");
+  font-weight: 300 900;
+  font-style: normal;
+  font-display: swap;
+}
+
+/* Nib Pro — static files. Browser picks the right file based on the
+   element's font-weight / font-style combination. */
+@font-face {
+  font-family: "Nib Pro";
+  src: url("/fonts/nib-pro/NibPro-Light.woff2") format("woff2");
+  font-weight: 300;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: "Nib Pro";
+  src: url("/fonts/nib-pro/NibPro-LightItalic.woff2") format("woff2");
+  font-weight: 300;
+  font-style: italic;
+  font-display: swap;
+}
+@font-face {
+  font-family: "Nib Pro";
+  src: url("/fonts/nib-pro/NibPro-Regular.woff2") format("woff2");
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: "Nib Pro";
+  src: url("/fonts/nib-pro/NibPro-Italic.woff2") format("woff2");
+  font-weight: 400;
+  font-style: italic;
+  font-display: swap;
+}
+
+@theme {
+  --font-sans:
+    "Satoshi", ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont,
+    "Segoe UI", sans-serif;
+  --font-accent:
+    "Nib Pro", "Satoshi", ui-sans-serif, system-ui, sans-serif;
+}
+
+/* Leading trim — Satoshi defaults.
+   Half-leading is removed above cap-height and below baseline so text sits
+   flush to its container. Offsets are font-specific. */
+:is([class*="u-text-style-"], h1, h2, h3, h4, h5, h6, p, blockquote) {
+  display: flow-root;
+}
+:is([class*="u-text-style-"], h1, h2, h3, h4, h5, h6, p, blockquote)::before {
+  content: "";
+  display: table;
+  margin-bottom: calc(-0.5lh + 0.34em);
+}
+:is([class*="u-text-style-"], h1, h2, h3, h4, h5, h6, p, blockquote)::after {
+  content: "";
+  display: table;
+  margin-bottom: calc(-0.5lh + 0.38em);
+}
+
+/* Leading trim — Nib Pro overrides.
+   Triggered by `.font-accent` (the same class Tailwind generates from
+   --font-accent), so opting into the accent font also opts into its trim. */
+:is(
+  [class*="u-text-style-"], h1, h2, h3, h4, h5, h6, p, blockquote
+).font-accent::before {
+  margin-bottom: calc(-0.5lh + 0.47em);
+}
+:is(
+  [class*="u-text-style-"], h1, h2, h3, h4, h5, h6, p, blockquote
+).font-accent::after {
+  margin-bottom: calc(-0.5lh + 0.29em);
+}
+
+/* Typography scale — standard (static rem values).
+   Will be converted to fluid values in a follow-up. */
+
+@utility u-text-style-display {
+  font-size: 7rem;
+  line-height: 1;
+  letter-spacing: -0.04em;
+  font-weight: 500;
+}
+
+@utility u-text-style-h1 {
+  font-size: 5rem;
+  line-height: 1.05;
+  letter-spacing: -0.03em;
+  font-weight: 500;
+}
+
+@utility u-text-style-h2 {
+  font-size: 3.5rem;
+  line-height: 1.1;
+  letter-spacing: -0.025em;
+  font-weight: 500;
+}
+
+@utility u-text-style-h3 {
+  font-size: 2.5rem;
+  line-height: 1.15;
+  letter-spacing: -0.02em;
+  font-weight: 500;
+}
+
+@utility u-text-style-h4 {
+  font-size: 1.75rem;
+  line-height: 1.25;
+  letter-spacing: -0.015em;
+  font-weight: 500;
+}
+
+@utility u-text-style-h5 {
+  font-size: 1.25rem;
+  line-height: 1.35;
+  letter-spacing: -0.01em;
+  font-weight: 600;
+}
+
+@utility u-text-style-h6 {
+  font-size: 1rem;
+  line-height: 1.5;
+  letter-spacing: 0;
+  font-weight: 600;
+}
+
+@utility u-text-style-large {
+  font-size: 1.25rem;
+  line-height: 1.6;
+  letter-spacing: 0;
+  font-weight: 400;
+}
+
+@utility u-text-style-main {
+  font-size: 1rem;
+  line-height: 1.6;
+  letter-spacing: 0;
+  font-weight: 400;
+}
+
+@utility u-text-style-small {
+  font-size: 0.875rem;
+  line-height: 1.55;
+  letter-spacing: 0;
+  font-weight: 400;
+}
