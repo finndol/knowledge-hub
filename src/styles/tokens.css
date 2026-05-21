@@ -306,7 +306,10 @@
    the live theme value at the consumption point.
 ----------------------------------------------------------------------------- */
 
-@theme {
+/* `inline` keeps var() references live so themed selectors propagate at the
+   consumption site. Without it, var(--surface-page) would resolve to the
+   :root value at build time and freeze the dark/brand themes to light. */
+@theme inline {
   /* Clear Tailwind v4's default --container-* scale so it doesn't partially
      overlap our --spacing-* names. In v4 the spacing scale powers ALL length
      utilities (p-*, m-*, w-*, h-*, max-w-*, gap-*) — keeping --container-md
@@ -319,6 +322,7 @@
      our spacing names. Add more here if components need reusable sizes. */
   --container-prose: 65ch;
   --container-narrow: 40rem;
+  --container-hero: 55rem;
   --container-wide: 75rem;
 
   /* Colors — surfaces */
@@ -434,5 +438,6 @@
 }
 @utility u-stack-xs { display: flex; flex-direction: column; gap: var(--space-xs); }
 @utility u-stack-sm { display: flex; flex-direction: column; gap: var(--space-sm); }
+@utility u-stack-md { display: flex; flex-direction: column; gap: var(--space-md); }
 @utility u-stack-lg { display: flex; flex-direction: column; gap: var(--space-lg); }
 @utility u-stack-xl { display: flex; flex-direction: column; gap: var(--space-xl); }

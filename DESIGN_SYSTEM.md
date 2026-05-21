@@ -104,7 +104,7 @@ Headings, paragraphs, and other text elements have **no default vertical margins
 |---|---|---|
 | `u-stack-xs` | `--space-xs` | Tight clusters (label + value, badge + meta) |
 | `u-stack-sm` | `--space-sm` | Within a section block (heading + body) |
-| `u-stack` | `--space-md` | Default — between paragraphs, list items |
+| `u-stack` / `u-stack-md` | `--space-md` | Default — between paragraphs, list items |
 | `u-stack-lg` | `--space-lg` | Between distinct section blocks |
 | `u-stack-xl` | `--space-xl` | Between major page regions inside a section |
 
@@ -124,6 +124,8 @@ Compose by nesting stacks at different sizes:
 ```
 
 **Don't fight the gap.** When a child needs to break out of the rhythm (e.g. a tight button group, a flush-aligned media block), wrap that child in its own container or move it to a sibling stack. Negative margins to "undo" the gap create fragile, surprising layouts.
+
+**Leading-trim eats visible gap.** The trim utility removes ~0.21em from the top and bottom of every text element it covers. For a stack of trimmed siblings, the *visible* gap is roughly `gap − 0.21em × (font-size of upper + font-size of lower)`. Practical implication: a cluster containing `text-h1`/`text-h2` needs `u-stack-lg` or larger to feel right — `u-stack-sm` will look almost flush because trim eats most of the nominal 1rem gap. Rule of thumb: pick the stack size based on the **largest** text element in the cluster, not the smallest.
 
 `.u-prose` will be added later for blog/CMS content where heading→body spacing should differ from body→body spacing. Until then, `.u-stack-*` is the only vertical-rhythm primitive.
 

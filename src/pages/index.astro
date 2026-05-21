@@ -11,34 +11,120 @@ const structuredData = {
   "url": Astro.site?.href,
   "description": description,
 };
+
+const cards = [
+  {
+    label: 'Lorem ipsum',
+    bold: 'Lorem ipsum dolor sit amet,',
+    rest: ' consectetur adipiscing elit sed do eiusmod tempor.',
+  },
+  {
+    label: 'Dolor sit amet',
+    bold: 'Sed ut perspiciatis unde omnis',
+    rest: ' iste natus error sit voluptatem accusantium doloremque.',
+  },
+  {
+    label: 'Consectetur',
+    bold: 'Nemo enim ipsam voluptatem',
+    rest: ' quia voluptas sit aspernatur aut odit aut fugit.',
+  },
+  {
+    label: 'Adipiscing elit',
+    bold: 'Neque porro quisquam est',
+    rest: ' qui dolorem ipsum quia dolor sit amet consectetur.',
+  },
+];
 ---
 
 <BaseLayout title={title} description={description}>
   <script type="application/ld+json" slot="head" set:html={JSON.stringify(structuredData)} />
 
-  <div class="u-container py-section-lg u-stack-lg">
-    <header class="u-stack-sm">
-      <h1>Knowledge Hub</h1>
-      <p class="text-large text-secondary">A place where I share what I'm learning.</p>
-    </header>
+  <div data-theme="dark" class="bg-surface-page text-primary">
+    <div class="u-container py-section-xl u-stack-xl">
 
-    <section class="u-stack-sm">
-      <h2>What is this?</h2>
-      <p>
-        This site is a learning project. I'm using it to understand Cloudflare,
-        Astro, and how the modern web is built. Each section answers a question
-        I had while learning.
-      </p>
-    </section>
+      {/* HERO */}
+      <header class="u-stack-lg max-w-hero">
+        <a
+          href="#"
+          class="w-fit inline-flex items-center gap-2xs rounded-full border border-border-strong px-sm py-2xs text-small text-primary transition-colors hover:bg-hover-overlay"
+        >
+          <span>Lorem ipsum dolor sit amet consectetur</span>
+          <svg
+            width="16"
+            height="16"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="2"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            class="text-brand-text"
+            aria-hidden="true"
+          >
+            <line x1="5" y1="12" x2="19" y2="12" />
+            <polyline points="12 5 19 12 12 19" />
+          </svg>
+        </a>
 
-    <section class="u-stack-sm">
-      <h2>What am I building?</h2>
-      <p>
-        A progressive learning project on Cloudflare's edge platform. It starts as
-        a static site, then layers in dynamic features — server rendering, a
-        database, search, and more — to teach the full stack of Cloudflare
-        primitives one step at a time.
-      </p>
-    </section>
+        <div class="u-stack-md">
+          <h1>Lorem ipsum dolor sit amet consectetur adipiscing elit.</h1>
+
+          <p class="text-large text-secondary max-w-narrow">
+            Lorem ipsum dolor sit amet consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
+          </p>
+        </div>
+
+        <a
+          href="#"
+          class="w-fit rounded-md bg-surface-inverse px-md py-sm text-medium font-medium text-inverse transition-opacity hover:opacity-90"
+        >
+          Lorem ipsum
+        </a>
+      </header>
+
+      {/* CARD GRID */}
+      <ul class="grid list-none grid-cols-1 gap-md p-0 sm:grid-cols-2 lg:grid-cols-4">
+        {cards.map(({ label, bold, rest }) => (
+          <li class="u-stack-sm border-t border-border-subtle pt-sm">
+            <p class="text-medium font-medium">{label}</p>
+            <a
+              href="#"
+              class="group relative block overflow-hidden rounded-md bg-surface-raised"
+              style="aspect-ratio: 3 / 4;"
+              aria-label={label}
+            >
+              <div
+                class="absolute inset-0"
+                style="background: linear-gradient(135deg, var(--surface-raised) 0%, var(--surface-sunken) 100%);"
+                aria-hidden="true"
+              ></div>
+              <span
+                class="bg-hover-overlay text-primary absolute right-sm bottom-sm flex items-center justify-center rounded-full transition-colors group-hover:bg-active-overlay"
+                style="width: var(--space-lg); height: var(--space-lg);"
+                aria-hidden="true"
+              >
+                <svg
+                  width="18"
+                  height="18"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="2"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                >
+                  <line x1="5" y1="12" x2="19" y2="12" />
+                  <polyline points="12 5 19 12 12 19" />
+                </svg>
+              </span>
+            </a>
+            <p class="text-medium text-secondary">
+              <strong class="text-primary font-medium">{bold}</strong>{rest}
+            </p>
+          </li>
+        ))}
+      </ul>
+
+    </div>
   </div>
 </BaseLayout>
