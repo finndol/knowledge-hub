@@ -1,0 +1,94 @@
+---
+import { getCollection } from 'astro:content';
+import BaseLayout from '../../layouts/BaseLayout.astro';
+
+const posts = (await getCollection('blog'))
+  .sort((a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf());
+
+const title = "Blog — Knowledge Hub";
+const description = "Posts about web development, Cloudflare, Astro, and edge computing.";
+---
+
+<BaseLayout title={title} description={description}>
+  <div data-theme="dark" class="min-h-screen bg-surface-page text-primary">
+    <div class="u-container py-section-xl u-stack-xl">
+
+      {/* HEADER */}
+      <header class="u-stack-md max-w-hero">
+        <div class="flex items-center gap-sm">
+          <span class="h-px w-xl bg-border-strong" aria-hidden="true"></span>
+          <span class="text-small uppercase text-secondary" style="letter-spacing: 0.2em;">
+            Knowledge Hub
+          </span>
+        </div>
+
+        <h1 class="max-w-narrow">Writing</h1>
+
+        <p class="text-large text-secondary max-w-narrow">
+          Things I'm learning, written down — notes on web development,
+          Cloudflare, Astro, and building on the edge.
+        </p>
+      </header>
+
+      {/* POST INDEX */}
+      <ul class="u-stack-lg list-none p-0">
+        {posts.map((post) => (
+          <li>
+            <a
+              href={`/blog/${post.id}`}
+              class="group block border-t border-border-subtle pt-md transition-colors hover:border-border-strong"
+            >
+              <div class="u-stack-sm">
+
+                <div class="flex flex-wrap items-center justify-between gap-sm">
+                  <time
+                    datetime={post.data.pubDate.toISOString()}
+                    class="text-small uppercase text-muted"
+                    style="letter-spacing: 0.1em;"
+                  >
+                    {post.data.pubDate.toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' })}
+                  </time>
+
+                  {post.data.tags.length > 0 && (
+                    <ul class="flex list-none flex-wrap gap-2xs p-0">
+                      {post.data.tags.map((tag) => (
+                        <li class="rounded-full border border-border-subtle px-xs py-3xs text-small text-secondary">
+                          {tag}
+                        </li>
+                      ))}
+                    </ul>
+                  )}
+                </div>
+
+                <div class="flex items-start justify-between gap-md transition-colors group-hover:text-brand-text">
+                  <h2 class="text-h3">{post.data.title}</h2>
+                  <svg
+                    width="24"
+                    height="24"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="currentColor"
+                    stroke-width="2"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    class="mt-2xs shrink-0 transition-transform duration-200 group-hover:translate-x-1"
+                    aria-hidden="true"
+                  >
+                    <line x1="5" y1="12" x2="19" y2="12" />
+                    <polyline points="12 5 19 12 12 19" />
+                  </svg>
+                </div>
+
+                <p class="text-medium text-secondary max-w-narrow">
+                  {post.data.description}
+                </p>
+
+              </div>
+            </a>
+          </li>
+        ))}
+      </ul>
+
+    </div>
+  </div>
+</BaseLayout>

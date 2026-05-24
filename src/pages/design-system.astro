@@ -1,0 +1,328 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+
+const headings = [
+  { tag: 'h1', token: 'text-h1',     label: 'Heading 1 / Display' },
+  { tag: 'h2', token: 'text-h2',     label: 'Heading 2' },
+  { tag: 'h3', token: 'text-h3',     label: 'Heading 3' },
+  { tag: 'h4', token: 'text-h4',     label: 'Heading 4' },
+  { tag: 'h5', token: 'text-h5',     label: 'Heading 5' },
+  { tag: 'h6', token: 'text-h6',     label: 'Heading 6' },
+];
+
+const bodyScale = [
+  { token: 'text-xlarge', label: 'XLarge' },
+  { token: 'text-large',  label: 'Large' },
+  { token: 'text-medium', label: 'Medium (body default)' },
+  { token: 'text-small',  label: 'Small' },
+];
+
+const microSpacing = ['3xs', '2xs', 'xs', 'sm', 'md', 'lg', 'xl', '2xl'];
+const sectionSpacing = ['sm', 'md', 'lg', 'xl'];
+
+const surfaces = [
+  { token: 'surface-page',    bgClass: 'bg-surface-page' },
+  { token: 'surface-raised',  bgClass: 'bg-surface-raised' },
+  { token: 'surface-sunken',  bgClass: 'bg-surface-sunken' },
+  { token: 'surface-inverse', bgClass: 'bg-surface-inverse' },
+];
+
+const textColors = [
+  { token: 'text-primary',    cls: 'text-primary' },
+  { token: 'text-secondary',  cls: 'text-secondary' },
+  { token: 'text-muted',      cls: 'text-muted' },
+  { token: 'text-brand-text', cls: 'text-brand-text' },
+];
+
+const brandColors = [
+  { token: 'brand',         bgClass: 'bg-brand' },
+  { token: 'brand-hover',   bgClass: 'bg-brand-hover' },
+  { token: 'brand-active',  bgClass: 'bg-brand-active' },
+  { token: 'brand-subtle',  bgClass: 'bg-brand-subtle' },
+];
+
+const borderColors = [
+  { token: 'border-subtle', cls: 'border-border-subtle' },
+  { token: 'border-strong', cls: 'border-border-strong' },
+];
+
+const sampleText =
+  'The quick brown fox jumps over the lazy dog. Sphinx of black quartz, judge my vow.';
+---
+
+<BaseLayout
+  title="Design System — Knowledge Hub"
+  description="Live token reference for the Antler marketing site design system."
+>
+  <div class="bg-surface-page text-primary min-h-screen">
+
+    <!-- Theme switcher -->
+    <div
+      class="border-border-subtle bg-surface-raised sticky top-0 z-10 border-b"
+    >
+      <div class="u-container flex items-center justify-between gap-md py-sm">
+        <span class="text-small text-secondary">Theme</span>
+        <div class="flex gap-2xs" role="group" aria-label="Theme">
+          <button
+            type="button"
+            data-theme-set="light"
+            class="bg-surface-page text-primary border-border-strong text-small cursor-pointer rounded-md border px-sm py-2xs"
+          >Light</button>
+          <button
+            type="button"
+            data-theme-set="dark"
+            class="bg-surface-page text-primary border-border-strong text-small cursor-pointer rounded-md border px-sm py-2xs"
+          >Dark</button>
+          <button
+            type="button"
+            data-theme-set="brand"
+            class="bg-surface-page text-primary border-border-strong text-small cursor-pointer rounded-md border px-sm py-2xs"
+          >Brand</button>
+        </div>
+      </div>
+    </div>
+
+    <main class="u-container py-section-lg">
+
+      <header class="mb-section-md">
+        <p class="text-small text-muted">Reference</p>
+        <h1 class="mt-2xs">Design System</h1>
+        <p class="text-large text-secondary mt-sm max-w-[60ch]">
+          Every token rendered live. Toggle themes above; resize the viewport
+          from 375px to 1440px+ to see fluid values interpolate.
+        </p>
+      </header>
+
+      <!-- ============ TYPOGRAPHY ============ -->
+      <section class="mb-section-xl">
+        <h2 class="mb-md">Typography</h2>
+
+        <h3 class="text-secondary mb-sm">Heading scale</h3>
+        <div class="border-border-subtle flex flex-col border-t">
+          {headings.map(({ tag, token, label }) => (
+            <div class="border-border-subtle flex flex-col gap-xs border-b py-md md:flex-row md:items-baseline md:gap-md">
+              <div class="md:w-40 flex flex-col gap-3xs flex-shrink-0">
+                <code class="text-small text-muted">{token}</code>
+                <p class="text-small text-secondary">{tag}</p>
+              </div>
+              <div class="flex-1">
+                {tag === 'h1' && <h1>{label}</h1>}
+                {tag === 'h2' && <h2>{label}</h2>}
+                {tag === 'h3' && <h3>{label}</h3>}
+                {tag === 'h4' && <h4>{label}</h4>}
+                {tag === 'h5' && <h5>{label}</h5>}
+                {tag === 'h6' && <h6>{label}</h6>}
+              </div>
+            </div>
+          ))}
+        </div>
+
+        <h3 class="text-secondary mt-xl mb-sm">Body scale</h3>
+        <div class="border-border-subtle flex flex-col border-t">
+          {bodyScale.map(({ token, label }) => (
+            <div class="border-border-subtle flex flex-col gap-xs border-b py-md md:flex-row md:items-baseline md:gap-md">
+              <div class="md:w-40 flex-shrink-0">
+                <code class="text-small text-muted">{token}</code>
+              </div>
+              <div class="flex-1 max-w-[60ch]">
+                <p class={token}>{label}: {sampleText}</p>
+              </div>
+            </div>
+          ))}
+        </div>
+
+        <h3 class="text-secondary mt-xl mb-sm">Accent font (Nib Pro)</h3>
+        <div class="border-border-subtle border-t border-b py-md">
+          <p class="font-accent text-h3">Editorial accent — Nib Pro italic.</p>
+          <p class="text-small text-muted mt-2xs">
+            Apply <code>.font-accent</code> to opt into the Nib Pro trim offsets.
+          </p>
+        </div>
+      </section>
+
+      <!-- ============ SITE MARGIN ============ -->
+      <section class="mb-section-xl">
+        <h2 class="mb-md">Site margin</h2>
+        <p class="text-secondary mb-sm max-w-[60ch]">
+          <code>--site-margin</code> scales 1rem → 5rem between 375px and 1440px.
+          The bars below visualise the current gutter (red) and content area
+          (subtle).
+        </p>
+        <div class="bg-brand-subtle relative h-12 w-full overflow-hidden">
+          <div class="bg-brand absolute inset-y-0 left-0" style="width: var(--site-margin);"></div>
+          <div class="bg-brand absolute inset-y-0 right-0" style="width: var(--site-margin);"></div>
+          <div class="text-small text-secondary absolute inset-0 flex items-center justify-center">
+            content area
+          </div>
+        </div>
+      </section>
+
+      <!-- ============ MICRO SPACING ============ -->
+      <section class="mb-section-xl">
+        <h2 class="mb-md">Micro spacing</h2>
+        <p class="text-secondary mb-md max-w-[60ch]">
+          Tailwind utilities: <code>p-{`{token}`}</code>, <code>m-{`{token}`}</code>, <code>gap-{`{token}`}</code>.
+        </p>
+        <div class="flex flex-col gap-sm">
+          {microSpacing.map((t) => (
+            <div class="flex items-center gap-md">
+              <code class="text-small text-muted w-20 flex-shrink-0">{t}</code>
+              <div class="bg-brand h-4" style={`width: var(--space-${t});`}></div>
+              <span class="text-small text-secondary">--space-{t}</span>
+            </div>
+          ))}
+        </div>
+      </section>
+
+      <!-- ============ SECTION PADDING ============ -->
+      <section class="mb-section-xl">
+        <h2 class="mb-md">Section padding</h2>
+        <p class="text-secondary mb-md max-w-[60ch]">
+          Tailwind utilities: <code>py-section-{`{token}`}</code>, <code>pt-section-{`{token}`}</code>, etc.
+        </p>
+        <div class="flex flex-col gap-sm">
+          {sectionSpacing.map((t) => (
+            <div class="flex items-center gap-md">
+              <code class="text-small text-muted w-24 flex-shrink-0">section-{t}</code>
+              <div class="bg-brand h-4" style={`width: var(--section-${t});`}></div>
+              <span class="text-small text-secondary">--section-{t}</span>
+            </div>
+          ))}
+        </div>
+      </section>
+
+      <!-- ============ COLORS ============ -->
+      <section class="mb-section-xl">
+        <h2 class="mb-md">Colors — semantic tokens</h2>
+        <p class="text-secondary mb-md max-w-[60ch]">
+          These update when you toggle the theme. Components must only use
+          these — never primitives.
+        </p>
+
+        <h3 class="text-secondary mt-lg mb-sm">Surfaces</h3>
+        <div class="grid grid-cols-2 gap-sm md:grid-cols-4">
+          {surfaces.map(({ token, bgClass }) => (
+            <div class="border-border-subtle overflow-hidden rounded-md border">
+              <div class={`${bgClass} h-20`}></div>
+              <div class="bg-surface-raised p-xs">
+                <code class="text-small">{token}</code>
+              </div>
+            </div>
+          ))}
+        </div>
+
+        <h3 class="text-secondary mt-lg mb-sm">Text</h3>
+        <div class="bg-surface-raised border-border-subtle rounded-md border p-md">
+          {textColors.map(({ token, cls }) => (
+            <p class={`${cls} text-medium`}>
+              <code class="text-small mr-sm">{token}</code>
+              The quick brown fox jumps over the lazy dog.
+            </p>
+          ))}
+          <div class="bg-surface-inverse mt-sm rounded-md p-md">
+            <p class="text-inverse text-medium">
+              <code class="text-small mr-sm">text-inverse</code>
+              On <code>surface-inverse</code>.
+            </p>
+          </div>
+        </div>
+
+        <h3 class="text-secondary mt-lg mb-sm">Brand</h3>
+        <div class="grid grid-cols-2 gap-sm md:grid-cols-4">
+          {brandColors.map(({ token, bgClass }) => (
+            <div class="border-border-subtle overflow-hidden rounded-md border">
+              <div class={`${bgClass} h-20`}></div>
+              <div class="bg-surface-raised p-xs">
+                <code class="text-small">{token}</code>
+              </div>
+            </div>
+          ))}
+        </div>
+
+        <h3 class="text-secondary mt-lg mb-sm">Borders</h3>
+        <div class="grid grid-cols-2 gap-sm">
+          {borderColors.map(({ token, cls }) => (
+            <div class={`bg-surface-raised rounded-md border-2 ${cls} p-md`}>
+              <code class="text-small">{token}</code>
+            </div>
+          ))}
+        </div>
+
+        <h3 class="text-secondary mt-lg mb-sm">Interactive overlays</h3>
+        <div class="grid grid-cols-2 gap-sm">
+          <div class="bg-surface-raised relative overflow-hidden rounded-md p-md">
+            <div class="bg-hover-overlay absolute inset-0"></div>
+            <code class="text-small relative">hover-overlay</code>
+          </div>
+          <div class="bg-surface-raised relative overflow-hidden rounded-md p-md">
+            <div class="bg-active-overlay absolute inset-0"></div>
+            <code class="text-small relative">active-overlay</code>
+          </div>
+        </div>
+
+        <h3 class="text-secondary mt-lg mb-sm">Focus ring</h3>
+        <div class="bg-surface-raised flex gap-md rounded-md p-md">
+          <button
+            type="button"
+            class="bg-brand text-inverse text-medium cursor-pointer rounded-md px-sm py-2xs"
+          >Focus me (tab in)</button>
+          <a
+            href="#"
+            class="text-brand-text text-medium underline"
+          >Focusable link</a>
+        </div>
+      </section>
+
+      <!-- ============ COMPOSITION EXAMPLES ============ -->
+      <section class="mb-section-xl">
+        <h2 class="mb-md">Composition examples</h2>
+
+        <h3 class="text-secondary mt-lg mb-sm">Card</h3>
+        <article class="bg-surface-raised border-border-subtle max-w-narrow rounded-md border p-md">
+          <h3>Card title</h3>
+          <p class="text-secondary mt-sm">
+            Built from <code>bg-surface-raised text-primary p-md border-border-subtle</code>.
+            Body uses <code>text-secondary</code> for de-emphasis.
+          </p>
+          <a href="#" class="text-brand-text mt-sm inline-block underline">
+            Brand-colored link
+          </a>
+        </article>
+
+        <h3 class="text-secondary mt-lg mb-sm">Inline theme override</h3>
+        <section data-theme="brand" class="bg-surface-page text-primary mt-sm rounded-md p-md">
+          <p class="text-h4">Brand-themed block inside the current page.</p>
+          <p class="text-secondary mt-sm">
+            Wrap any element in <code>data-theme="brand"</code> to retheme it.
+            Light or dark works the same way.
+          </p>
+        </section>
+      </section>
+
+    </main>
+  </div>
+
+  <script>
+    const buttons = document.querySelectorAll<HTMLButtonElement>('[data-theme-set]');
+    const root = document.documentElement;
+    const STORAGE_KEY = 'design-system-theme';
+
+    function apply(theme: string) {
+      root.setAttribute('data-theme', theme);
+      try { localStorage.setItem(STORAGE_KEY, theme); } catch {}
+    }
+
+    const saved = (() => {
+      try { return localStorage.getItem(STORAGE_KEY); } catch { return null; }
+    })();
+    if (saved) apply(saved);
+    else if (!root.getAttribute('data-theme')) apply('light');
+
+    buttons.forEach((b) => {
+      b.addEventListener('click', () => {
+        const t = b.getAttribute('data-theme-set');
+        if (t) apply(t);
+      });
+    });
+  </script>
+</BaseLayout>
